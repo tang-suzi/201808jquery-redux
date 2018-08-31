@@ -18,7 +18,7 @@ const createStore = (reducer) => {
     let subscribe = (listener) => {
         listeners.push(listener);
         return () => {
-            listeners.filter(l=>listener!==l);
+            listeners = listeners.filter(l=>listener!==l);
         }
     }
     dispatch();

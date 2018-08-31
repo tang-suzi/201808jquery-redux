@@ -23,7 +23,11 @@ let render = () => {
     $('#counter').html(store.getState().number);
 }
 // 当仓库里的state发生变化的时候 会重新执行render 读取最新的状态数据并更新视图
-store.subscribe(render);
+let unsubscribe = store.subscribe(render);
+setTimeout(function(){
+    // 取消订阅
+    unsubscribe()
+},5000)
 $('increaseBtn').click(() => store.dispatch({type: INCREASE,amount: 3})
 )
 $('decreaseBtn').click(() => store.dispatch({type: DECREASE,amount: 2})
