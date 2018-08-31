@@ -10,6 +10,7 @@ const createStore = (reducer) => {
     let dispatch = (action) => {
         // 传入老的state和action 返回新的state
         state = reducer(state,action);
+        // 依次调用所有的订阅函数
         listeners.forEach(listener=>listener())
     }
     // 订阅仓库内的状态变化事件 当状态发生变化之后会调用对应的监听函数
@@ -17,13 +18,14 @@ const createStore = (reducer) => {
     let subscribe = (listener) => {
         listeners.push(listener);
         return () => {
-            listeners.filter(l=>listener!=l);
+            listeners.filter(l=>listener!==l);
         }
     }
+    dispatch();
     return {
         getState, // 获取最新的状态对象
         subscribe, // 订阅状态变化事件
-        dispatch
+        dispatch  // 发射action
     }
 }
 
